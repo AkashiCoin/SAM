@@ -59,17 +59,6 @@ namespace SAM.Controllers
         }
 
         /// <summary>
-        /// 获取权限信息
-        /// </summary>
-        /// 
-        [Authorize(Roles = "Teacher,Student")]
-        [HttpPost]
-        public JsonResult Roles() {
-            List<Role> roles = dataContext.Roles.ToList();
-            return Json(roles);
-        }
-
-        /// <summary>
         /// 新增
         /// </summary>
         /// <returns></returns>

@@ -66,6 +66,16 @@ namespace SAM.Controllers
         }
 
         /// <summary>
+        /// 返回权限信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult Roles()
+        {
+            return Json(dataContext.Roles.ToList());
+        }
+
+        /// <summary>
         /// 编辑保存
         /// </summary>
         /// <param name="user"></param>
