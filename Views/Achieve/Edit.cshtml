@@ -70,7 +70,7 @@
                         if (item.no == @Model.CourseId) {
                             selected = true;
                         }
-                        var opt = new Option(item.no + "---" + item.name, item.no, selected);
+                        var opt = new Option(item.no + "---" + item.name, item.no, selected, selected);
                         sel.options.add(opt);
                     });
                 }
@@ -93,7 +93,7 @@
                         if (item.no == @Model.StudentId) {
                             selected = true;
                         }
-                        var opt = new Option(item.no + "---" + item.name, item.no, selected);
+                        var opt = new Option(item.no + "---" + item.name, item.no, selected, selected);
                         sel.options.add(opt);
                     });
                 }

@@ -70,7 +70,7 @@
                         if (item.id == @Model.RoleId) {
                             selected = true;
                         }
-                        var opt = new Option(item.id + "---" + item.name, item.id, selected);
+                        var opt = new Option(item.id + "---" + item.name, item.id, selected, selected);
                         sel.options.add(opt);
                     });
                 }
