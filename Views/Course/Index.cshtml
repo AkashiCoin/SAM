@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <link rel="stylesheet" type="text/css" href="/css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" media="screen" />
+    <!--[if IE 6]><link rel="stylesheet" type="text/css" href="css/ie6.css" media="screen" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="css/ie.css" media="screen" /><![endif]-->
+    <link href="/css/table/demo_page.css" rel="stylesheet" type="text/css" />
+    <!-- BEGIN: load jquery -->
+    <script src="/js/jquery-1.6.4.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/jquery-ui/jquery.ui.core.min.js"></script>
+    <script src="/js/jquery-ui/jquery.ui.widget.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.core.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.slide.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.mouse.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.sortable.min.js" type="text/javascript"></script>
+    <script src="/js/table/jquery.dataTables.min.js" type="text/javascript"></script>
+    <!-- END: load jquery -->
+    <script type="text/javascript" src="/js/table/table.js"></script>
+    <script src="/js/setup.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var timer; //监听器
+        var winopen;  //B页面的打开事件
+        //判断子窗口是否关闭，关闭刷新页面
+        function IfWindowClosed() {
+            //判断B页面打开事件
+            if (winopen.closed == true) {
+                //执行A页面的相关方法操作
+                query();
+                //关闭监听器
+                window.clearInterval(timer);
+            }
+        }
+        $(document).ready(function () {
+            query();
+            //查询按钮绑定事件
+            $("#btnQuery").click(function () {
+                query();
+            });
+            $("#btnAdd").click(function () {
+                var url = "Course/Add";
+                winopen = window.open(url, '_target', "width=400,height=450,left=400,top=300");
+                //打开监听器
+                timer = window.setInterval("IfWindowClosed()", 500);
+            });
+            $("#btnEdit").click(function () {
+                var id = $("input[name='sckb']:checked").val();
+                if (id == null || id == "") {
+                    alert("没有选择需要修改的项");
+                }
+                else {
+                    var url = "Course/Edit/" + id;
+                    winopen = window.open(url, '_target', "width=400,height=450,left=400,top=300");
+                    //打开监听器
+                    timer = window.setInterval("IfWindowClosed()", 500);
+                }
+            });
+            $("#btnDelete").click(function () {
+                var id = $("input[name='sckb']:checked").val();
+                if (id == null || id == "") {
+                    alert("没有选择需要删除的项");
+                } else {
+                    if (confirm("确定要删除吗？")) {
+                        var url = "/Course/Delete/"+id;
+                        
+                        $.post(
+                            url,
+                            {
+                                
+                            },
+                            function (data, status) {
+                                //debugger;
+                                if (status == "success") {
+                                    if (data == "Success") {
+                                        query();
+                                        alert("删除成功");
+                                    } else {
+                                        window.alert(data);
+                                    }
+                                } else {
+                                    window.alert("访问异常");
+                                }
+                                console.log("数据: \n" + data + "\n状态: " + status);
+                            }
+                        );
+                    }
+                }
+            });
+        });
+        function query() {
+            var url = "/Course/Query";
+            $.post(
+                url,
+                {
+                    Name: $("#Name").val()
+                },
+                function (data, status) {
+                    //debugger;
+                    console.log("数据: \n" + data + "\n状态: " + status);
+                    $("#student tbody").empty();
+                    //初始化Table
+                    $.each(data, function (n, item) {
+                        var rowstyle = "odd gradeA";
+                        if (n % 2 == 0) {
+                            rowstyle = "even gradeA";
+                        }
+                        var row = "<tr class=\"" + rowstyle + "\"><td><input type='checkbox' name=\"sckb\" id='sckb" + item.id + "' value='" + item.id + "' onclick='javascript:chkClick(event)' /></td><td>" + item.no + "</td><td>" + item.name + "</td><td>" + item.teacherName + "</td><td>" + item.type + "</td></tr>";
+                        $("#student tbody").append(row);
+                    });
+                }
+            );
+            $('.datatable').dataTable();
+        }
+
+        function chkClick(e) {
+            
+            if ($(e.target).prop("checked")) {
+                var id = $(e.target).val();
+                $(e.target).parent().parent().css("background", "lightblue");
+                $("input[name='sckb']").each(function (index, item) {//
+                    debugger;
+                    if ($(item).val() != id) {
+                        $(item).prop("checked", false);
+                        $(item).parent().parent().css("background", "none");
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container_12">
+        <div class="grid_10">
+            <div class="box round first grid">
+                <h2>课程信息查询</h2>
+                <div>
+                    <span>课程名称</span><input type="text" id="Name" name="Name" />
+                    <button class="btn btn-blue" id="btnQuery"><span></span>Query</button>
+                    <button class="btn btn-blue" id="btnAdd"><span></span>Add</button>
+                    <button class="btn btn-blue" id="btnEdit"><span></span>Edit</button>
+                    <button class="btn btn-blue" id="btnDelete"><span></span>Delete</button>
+                </div>
+                <div class="block">
+                    <table class="data display datatable" id="student">
+                        <thead>
+                            <tr>
+                                <th>选择</th>
+                                <th>课程号</th>
+                                <th>课程名称</th>
+                                <th>指导老师</th>
+                                <th>考察类型</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

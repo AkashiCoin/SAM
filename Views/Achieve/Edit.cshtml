@@ -1,0 +1,176 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>学生成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/text.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/grid.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/css/nav.css" media="screen" />
+    <!--[if IE 6]><link rel="stylesheet" type="text/css" href="css/ie6.css" media="screen" /><![endif]-->
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="css/ie.css" media="screen" /><![endif]-->
+    <link href="/css/fancy-button/fancy-button.css" rel="stylesheet" type="text/css" />
+    <!--Jquery UI CSS-->
+    <link href="/css/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+    <!-- BEGIN: load jquery -->
+    <script src="/js/jquery-1.6.4.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/jquery-ui/jquery.ui.core.min.js"></script>
+    <script src="/js/jquery-ui/jquery.ui.widget.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.core.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.slide.min.js" type="text/javascript"></script>
+    <!-- END: load jquery -->
+    <!--jQuery Date Picker-->
+    <script src="/js/jquery-ui/jquery.ui.widget.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.datepicker.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.progressbar.min.js" type="text/javascript"></script>
+    <!-- jQuery dialog related-->
+    <script src="/js/jquery-ui/external/jquery.bgiframe-2.1.2.js" type="text/javascript"></script>
+    <script src="js/jquery-ui/jquery.ui.mouse.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.draggable.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.position.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.resizable.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.ui.dialog.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.core.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.blind.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui/jquery.effects.explode.min.js" type="text/javascript"></script>
+    <!-- jQuery dialog end here-->
+    <script src="/js/jquery-ui/jquery.ui.accordion.min.js" type="text/javascript"></script>
+    <!--Fancy Button-->
+    <script src="/js/fancy-button/fancy-button.js" type="text/javascript"></script>
+    <script src="/js/setup.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            queryStudents();
+            queryCourses();
+            //$('input[type="radio"]').fancybutton();
+            $("#btnSave").click(function () {
+                save();
+            });
+        });
+        function queryCourses() {
+            var url = "/Course/Query";
+            $.post(
+                url,
+                {
+
+                },
+                function (data, status) {
+                    //debugger;
+                    console.log("数据: \n" + data + "\n状态: " + status);
+                    var sel = document.getElementById("CourseId");
+                    //初始化
+                    $.each(data, function (n, item) {
+                        var selected = false;
+                        if (item.no == @Model.CourseId) {
+                            selected = true;
+                        }
+                        var opt = new Option(item.no + "---" + item.name, item.no, selected);
+                        sel.options.add(opt);
+                    });
+                }
+            );
+        }
+        function queryStudents() {
+            var url = "/Student/Query";
+            $.post(
+                url,
+                {
+
+                },
+                function (data, status) {
+                    //debugger;
+                    console.log("数据: \n" + data + "\n状态: " + status);
+                    var sel = document.getElementById("StudentId");
+                    //初始化
+                    $.each(data, function (n, item) {
+                        var selected = false;
+                        if (item.no == @Model.StudentId) {
+                            selected = true;
+                        }
+                        var opt = new Option(item.no + "---" + item.name, item.no, selected);
+                        sel.options.add(opt);
+                    });
+                }
+            );
+        }
+        function save() {
+            var url = "/Achieve/Save2";
+            $.post(
+                url,
+                {
+                    Id: $("#Id").val(),
+                    StudentId:$("#StudentId").val(),
+                    CourseId: $("#CourseId").val(),
+                    Score: $("#Score").val(),
+                },
+                function (data, status) {
+                    //debugger;
+                    if (status == "success") {
+                        if (data == "Success") {
+                            window.close();
+                        } else {
+                            window.alert(data);
+                        }
+                    } else {
+                        window.alert("访问异常");
+                    }
+                    console.log("数据: \n" + data + "\n状态: " + status);
+                }
+            );
+        }
+    </script>
+</head>
+<body>
+    <div class="container_12">
+        <div class="grid_12">
+            <div class="box round first fullpage">
+                <h2>编辑成绩信息</h2>
+                <div class="block ">
+                    
+                    <input type="hidden" name="Id" id="Id" value="@Model.Id" />
+                    <table class="form">
+                        <tr>
+                            <td class="col1">
+                                <label>学号</label>
+                            </td>
+                            <td class="col2">
+                                <select readonly="readonly" id="StudentId" name="StudentId" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col1">
+                                <label>课程</label>
+                            </td>
+                            <td class="col2">
+                                <select readonly="readonly" id="CourseId" name="CourseId" />
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td class="col1">
+                                <label>分数</label>
+                            </td>
+                            <td class="col2">
+                                <input type="text" id="Score" name="Score" value="@Model.Score"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button class="btn btn-blue" id="btnSave">Save</button>
+                                <button class="btn btn-grey" name="Reset" id="Reset">Reset</button>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

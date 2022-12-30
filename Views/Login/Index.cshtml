@@ -1,0 +1,46 @@
+﻿@{ Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>学生成绩管理系统</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <!-- For-Mobile-Apps-and-Meta-Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- //For-Mobile-Apps-and-Meta-Tags -->
+
+</head>
+
+<body>
+    <h1>学生成绩管理系统</h1>
+    <div class="container w3">
+        
+        <form action="/Login/Login" method="post">
+            <div class="username">
+                <span class="username">Username:</span>
+                <input type="text" id="UserName" name="UserName" class="name" placeholder="" required="">
+                <div class="clear"></div>
+            </div>
+            <div class="password-agileits">
+                <span class="username">Password:</span>
+                <input type="password" id="Password" name="Password" class="password" placeholder="" required="">
+                <div class="clear"></div>
+            </div>
+            <div class="rem-for-agile">
+                <input type="checkbox" name="remember" class="remember">记住密码<br>
+            </div>
+            <div class="login-w3">
+                <input type="submit" class="login" value="登 录">
+            </div>
+            <div class="clear"></div>
+            <div style="color:red;font-size:13px;">
+                @ViewBag.Msg
+            </div>
+        </form>
+    </div>
+    <div class="footer-w3l">
+        <p> &copy; 2022-2022 学生成绩管理系统. All Rights Reserved | Design by 协议</p>
+    </div>
+</body>
+</html>
