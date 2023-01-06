@@ -112,7 +112,7 @@
                         if (n % 2 == 0) {
                             rowstyle = "even gradeA";
                         }
-                        var row = "<tr class=\"" + rowstyle + "\"><td><input type='checkbox' name=\"sckb\" id='sckb" + item.id + "' value='" + item.id + "' onclick='javascript:chkClick(event)' /></td><td>" + item.no + "</td><td>" + item.name + "</td><td>" + item.teacherName + "</td><td>" + item.type + "</td></tr>";
+                        var row = "<tr class=\"" + rowstyle + "\"><td><input type='checkbox' name=\"sckb\" id='sckb" + item.id + "' value='" + item.id + "' onclick='javascript:chkClick(event)' /></td><td>" + item.no + "</td><td>" + item.name + "</td><td>" + item.teacherName + "</td><td>" + item.type + "</td><td>" + item.credit + "</td></tr>";
                         $("#student tbody").append(row);
                     });
                 }
@@ -157,6 +157,7 @@
                                 <th>课程名称</th>
                                 <th>指导老师</th>
                                 <th>考察类型</th>
+                                <th>学分</th>
                             </tr>
                         </thead>
                         <tbody>

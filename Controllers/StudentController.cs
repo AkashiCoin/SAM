@@ -76,7 +76,7 @@ namespace SAM.Controllers
         /// <returns></returns>
         [HttpPost]
         public JsonResult Save(Student student) {
-           dataContext.Students.Add(student);
+            dataContext.Students.Add(student);
             dataContext.SaveChanges();
             if (student.Id > 0)
             {

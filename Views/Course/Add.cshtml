@@ -80,6 +80,7 @@
                     Name: $("#Name").val(),
                     TeacherId: $("#TeacherId").val(),
                     Type: $("#Type").val(),
+                    Credit: $("#Credit").val(),
                 },
                 function (data, status) {
                     //debugger;
@@ -111,7 +112,7 @@
                                 <label>课程ID</label>
                             </td>
                             <td class="col2">
-                                <input type="text" id="No" name="No"/>
+                                <input type="text" id="No" name="No" />
                             </td>
                         </tr>
                         <tr>
@@ -119,7 +120,7 @@
                                 <label>课程名称</label>
                             </td>
                             <td class="col2">
-                                <input type="text" id="Name" name="Name"/>
+                                <input type="text" id="Name" name="Name" />
                             </td>
                         </tr>
                         <tr>
@@ -138,7 +139,16 @@
                                 <label>考察类型</label>
                             </td>
                             <td class="col2">
-                                <input type="text" id="Type" name="Type"/>
+                                <input type="text" id="Type" name="Type" />
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td class="col1">
+                                <label>学分</label>
+                            </td>
+                            <td class="col2">
+                                <input type="text" id="Credit" name="Credit" />
                             </td>
                         </tr>
                         <tr>

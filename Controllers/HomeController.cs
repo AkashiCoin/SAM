@@ -63,7 +63,6 @@ namespace SAM.Controllers
                 ViewBag.UserRights = GetUserRights();
             }
             return View();
-
         }
 
         public IActionResult Privacy()

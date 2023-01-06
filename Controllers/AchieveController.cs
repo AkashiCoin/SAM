@@ -45,9 +45,8 @@ namespace SAM.Controllers
                 var query = from a in dataContext.Achieves
                             join s in dataContext.Students on a.StudentId equals s.No
                             join c in dataContext.Courses on a.CourseId equals c.No
-                            select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name };
+                            select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name, Credit = GetCredit(c.Credit, a.Score) };
                 achieves = query.ToList();
-                // achieves = dataContext.Achieves.ToList();
 
             }
             else
@@ -56,9 +55,8 @@ namespace SAM.Controllers
                             join s in dataContext.Students on a.StudentId equals s.No
                             join c in dataContext.Courses on a.CourseId equals c.No
                             where s.Name.Contains(Name) || c.Name.Contains(Name)
-                            select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name };
+                            select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name, Credit = GetCredit(c.Credit, a.Score) };
                 achieves = query.ToList();
-                // achieves = dataContext.Achieves.Where(r => r.Student.Name.Contains(Name)).ToList();
             }
 
             return Json(achieves);
@@ -76,7 +74,7 @@ namespace SAM.Controllers
             var query = from a in dataContext.Achieves
                         join s in dataContext.Students on a.StudentId equals s.No
                         join c in dataContext.Courses on a.CourseId equals c.No
-                        select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name };
+                        select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name, Credit = GetCredit(c.Credit, a.Score) };
             return View(query.ToList());
         }
 
@@ -92,7 +90,7 @@ namespace SAM.Controllers
                         join s in dataContext.Students on a.StudentId equals s.No
                         join c in dataContext.Courses on a.CourseId equals c.No
                         where a.Id == id
-                        select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name };
+                        select new AchieveInfo { Id = a.Id, CourseId = a.CourseId, StudentId = a.StudentId, Score = a.Score, StudentName = s.Name, CourseName = c.Name, Credit = GetCredit(c.Credit, a.Score) };
             return View(query.First());
         }
 
@@ -178,6 +176,15 @@ namespace SAM.Controllers
                 }
             }
             return Json("Error");
+        }
+
+        static private int GetCredit(int credit, double score)
+        {
+            if (score >= 60)
+            {
+                return credit;
+            }
+            return 0;
         }
     }
 }

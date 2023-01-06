@@ -42,14 +42,14 @@ namespace SAM.Controllers
             {
                 var query = from c in dataContext.Courses
                             join t in dataContext.Teachers on c.TeacherId equals t.No
-                            select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name };
+                            select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name, Credit = c.Credit };
                 courses = query.ToList();
             }
             else {
                 var query = from c in dataContext.Courses
                             join t in dataContext.Teachers on c.TeacherId equals t.No
                             where c.Name.Contains(Name) || t.Name.Contains(Name)
-                            select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name };
+                            select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name, Credit = c.Credit };
                 courses = query.ToList();
             }
             
@@ -66,7 +66,7 @@ namespace SAM.Controllers
         {
             var query = from c in dataContext.Courses
                         join t in dataContext.Teachers on c.TeacherId equals t.No
-                        select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name };
+                        select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name, Credit = c.Credit };
             return View(query.ToList());
         }
 
@@ -80,7 +80,7 @@ namespace SAM.Controllers
             var query = from c in dataContext.Courses
                         join t in dataContext.Teachers on c.TeacherId equals t.No
                         where c.Id == id
-                        select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name };
+                        select new CourseInfo { Id = c.Id, TeacherId = c.TeacherId, No = c.No, TeacherName = t.Name, Type = c.Type, Name = c.Name, Credit = c.Credit };
             var course = query.FirstOrDefault();
             return View(course);
         }

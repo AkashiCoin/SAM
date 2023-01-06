@@ -37,5 +37,10 @@ namespace SAM.Models
         /// 分数
         /// </summary>
         public double Score { get; set; }
+
+        /// <summary>
+        /// 学分
+        /// </summary>
+        public int Credit { get; set; }
     }
 }

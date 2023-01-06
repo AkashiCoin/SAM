@@ -112,7 +112,7 @@
                         if (n % 2 == 0) {
                             rowstyle = "even gradeA";
                         }
-                        var row = "<tr class=\"" + rowstyle + "\"><td><input type='checkbox' name=\"sckb\" id='sckb" + item.id + "' value='" + item.id + "' onclick='javascript:chkClick(event)' /></td><td>" + item.courseName + "</td><td>" + item.studentName + "</td><td>" + item.score + "</td></tr>";
+                        var row = "<tr class=\"" + rowstyle + "\"><td><input type='checkbox' name=\"sckb\" id='sckb" + item.id + "' value='" + item.id + "' onclick='javascript:chkClick(event)' /></td><td>" + item.courseName + "</td><td>" + item.studentName + "</td><td>" + item.score +  "</td><td>" + item.credit + "</td></tr>";
                         $("#student tbody").append(row);
                     });
                 }
@@ -121,7 +121,6 @@
         }
 
         function chkClick(e) {
-
             if ($(e.target).prop("checked")) {
                 var id = $(e.target).val();
                 $(e.target).parent().parent().css("background", "lightblue");
@@ -156,6 +155,7 @@
                                 <th>课程名称</th>
                                 <th>学生姓名</th>
                                 <th>成绩</th>
+                                <th>学分</th>
                             </tr>
                         </thead>
                         <tbody>

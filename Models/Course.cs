@@ -22,6 +22,11 @@ namespace SAM.Models
         public string TeacherId { get; set; }
 
         /// <summary>
+        /// 学分
+        /// </summary>
+        public int Credit { get; set; }
+
+        /// <summary>
         /// 课程名称
         /// </summary>
         public string Name { get; set; }

@@ -83,6 +83,10 @@ namespace SAM.Controllers
         [HttpPost]
         public JsonResult Save2(User user) {
             var id = user.Id;
+            if (id != int.Parse(HttpContext.User.FindFirst("UserId").Value))
+            {
+                return Json("权限不足");
+            }
             if (id == 0)
             {
                 return Json("Error");

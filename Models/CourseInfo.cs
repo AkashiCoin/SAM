@@ -35,5 +35,10 @@ namespace SAM.Models
         /// 课程类型
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// 学分
+        /// </summary>
+        public int Credit { get; set; }
     }
 }

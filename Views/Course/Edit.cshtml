@@ -63,6 +63,7 @@
                     Name: $("#Name").val(),
                     TeacherId: $("#TeacherId").val(),
                     Type: $("#Type").val(),
+                    Credit: $("#Credit").val(),
                 },
                 function (data, status) {
                     //debugger;
@@ -147,6 +148,15 @@
                             </td>
                             <td class="col2">
                                 <input type="text" id="Type" name="Type" value="@Model.Type" />
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td class="col1">
+                                <label>学分</label>
+                            </td>
+                            <td class="col2">
+                                <input type="text" id="Credit" name="Credit" value="@Model.Credit" />
                             </td>
                         </tr>
                         <tr>
